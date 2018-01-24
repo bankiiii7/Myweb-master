@@ -28,6 +28,10 @@ var router =  new Router({
       path:'/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path:'/',
+      redirect: 'Login'
     }
   ]
 })
