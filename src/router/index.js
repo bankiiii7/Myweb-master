@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HelloWorld from '@/components/HelloWorld'
+import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import About from '@/components/About'
 import firebase from 'firebase'
+
 
 Vue.use(Router);
 
@@ -12,9 +14,9 @@ var router =  new Router({
   mode: 'history',
   routes: [
     {
-      path: '/hello',
-      name: 'HelloWorld',
-      component: HelloWorld,
+      path: '/home',
+      name: 'Home',
+      component: Home,
       meta: {
         requiresAuth:true
       }
@@ -32,6 +34,14 @@ var router =  new Router({
     {
       path:'/',
       redirect: 'Login'
+    },
+    {
+      path:'/about',
+      name: 'About',
+      component: About,
+      meta:{
+        requiresAuth:true
+      }
     }
   ]
 })
@@ -41,7 +51,7 @@ router.beforeEach((to, from, next) => {
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if(requiresAuth && !currentUser) next('login')
-  else if(!requiresAuth && currentUser) next('hello')
+  else if(!requiresAuth && currentUser) next('home')
   else next()
 })
 

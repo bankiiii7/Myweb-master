@@ -7,10 +7,16 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import VueFire from 'vuefire'
 import firebase from 'firebase'
+import AnimateCss from 'animate.css'
+import VueIcon from 'vue-icons'
+
 Vue.use(BootstrapVue);
-Vue.use(VueFire)
-Vue.config.productionTip = false
+Vue.use(VueFire);
+Vue.use(AnimateCss);
+Vue.use(VueIcon);
+Vue.config.productionTip = false;
 let app;
+let app2;
 firebase.auth().onAuthStateChanged(function (user) {
   if(!app) {
     /* eslint-disable no-new */
@@ -23,5 +29,16 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
   }
 });
+
+if(!app2) {
+  app2 = new Vue({
+    el:'#app',
+    data: {
+      message: 'This is app 2'
+    }
+  })
+}
+
+
 
 
