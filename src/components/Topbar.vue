@@ -3,18 +3,18 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <b-navbar toggleable="md" type="dark">
+          <b-navbar toggleable="md">
 
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-            <b-navbar-brand><img src="../assets/vuefire.png" height="20" width="15"/>VueFire!</b-navbar-brand>
+            <b-navbar-brand><img src="../assets/vuefire_burned.png" height="80" width="70"/>   VueFire!</b-navbar-brand>
 
             <b-collapse is-nav id="nav_collapse">
 
               <b-navbar-nav>
                 <b-nav-item>
-                  <router-link to="home">Home</router-link>
-                  <router-link to="about">About</router-link>
+                  <router-link to="home" class="routerLink">Home</router-link>
+                  <router-link to="about" class="routerLink">About</router-link>
                 </b-nav-item>
               </b-navbar-nav>
 
@@ -56,8 +56,6 @@
       firebase.auth().onAuthStateChanged(function (user) {
         vm.currentUserEmail = user.email
       })
-
-      console.log(this.currentUserEmail.length)
     },
     name: "topbar",
     data: function () {
@@ -96,7 +94,7 @@
     color: black;
   }
 
-  .b-navbar-nav {
+  .b-navbar-nav b-nav-item{
     color: black;
   }
 
@@ -117,4 +115,9 @@
   .link {
     color: black;
   }
+
+.routerLink {
+  color: black;
+  padding-right: 10px;
+}
 </style>

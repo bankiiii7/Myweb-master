@@ -1,33 +1,44 @@
 <template>
   <div class="Home">
-    <!--<h2>-->
-      <!--Account: {{email}}-->
-    <!--</h2>-->
-    <!--<button @click="logout" type="button" class="btn btn-danger">Logout</button>-->
-    <h1 class="animated zoomIn">Say Hi :)</h1>
-
+    <h1 class="animated zoomIn">Say Hi :) </h1>
     <hr>
-    <ul is="transition-group">
-      <li v-for="question in questions" track-by="time" class="question" :key="question['.key']">
-        <span class="animated bounceIn">[{{question.question}} x {{question.account}}]</span>
-      </li>
-    </ul>
+    <table border="0" width="40%" align="center">
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr v-for="question in questions">
+        <template v-if="question.account === email">
+          <td></td>
+          <td align="right">
+            <span class="btn btn-primary btn-lg">
+              {{question.question}}
+            </span></td>
+        </template>
+        <template v-else>
+          <td align="left">
+          {{(question.account).split("@")[0]}}<br>
+            <span class="btn btn-outline-primary btn-lg">
+              {{question.question}}
+            </span>
+          </td>
+          <td></td>
+        </template>
+      </tr>
+    </table>
     <hr>
     <br>
     <br>
-
-    <label><textarea v-model="question"></textarea></label>
+    <label><textarea v-model="question" id="chatTextArea"></textarea></label>
     <br>
     <button @click="addQuestion" type="button" class="btn btn-success">Chat!</button>
-
-
-
   </div>
 </template>
 
 <script>
-  import {namesRef} from "../firebase";
+  import {questionsRef} from "../firebase";
   import firebase from "firebase"
+  import moment from "moment"
 
   export default {
     name: 'Home',
@@ -35,7 +46,8 @@
       return {
         question: '',
         email: '',
-        user: {}
+        user: {},
+        msg: 'Message'
       }
     },
     created() {
@@ -45,15 +57,14 @@
       })
     },
     methods: {
+
       addQuestion: function () {
         var now = new Date();
-        namesRef.push({
-          question: this.question, account: this.email, time: now.getFullYear() +
+        questionsRef.push({
+          question: this.question, account: this.email, realTime:moment().toISOString(),timeForSort:now.getFullYear() +
           now.getMonth() + now.getDate() + now.getTime()
         });
-        namesRef.on('value', function (snapData) {
-          console.log(snapData.val().data());
-        })
+        document.getElementById("chatTextArea").value = "Fik"
       },
       logout: function () {
         var router = this.$router;
@@ -63,11 +74,16 @@
       }
     },
     firebase: {
-      questions: namesRef
+      questions: questionsRef.orderByChild("timeForSort").limitToLast(10)
     },
     computed: {
       reverseItems: function () {
         return this.questions.slice().reverse();
+      },
+      checkLongMessage:function (msg) {
+        if(msg.length > 15) {
+
+        }
       }
     }
 

@@ -8,12 +8,11 @@ import BootstrapVue from 'bootstrap-vue'
 import VueFire from 'vuefire'
 import firebase from 'firebase'
 import AnimateCss from 'animate.css'
-import VueIcon from 'vue-icons'
-
+import moment from 'moment'
 Vue.use(BootstrapVue);
 Vue.use(VueFire);
 Vue.use(AnimateCss);
-Vue.use(VueIcon);
+Vue.use(moment);
 Vue.config.productionTip = false;
 let app;
 let app2;

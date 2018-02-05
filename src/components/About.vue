@@ -1,5 +1,5 @@
 <template>
-<h1 class="animated tada">aboutMe</h1>
+<h1 class="animated tada">About me :)</h1>
 </template>
 
 <script>
