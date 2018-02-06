@@ -1,5 +1,6 @@
 import {initializeApp} from 'firebase';
 
+//Config about firebase
 const app = initializeApp(
   {
     apiKey: "AIzaSyA1JKEx4T7lJvoPLtwGSTXvHygD31fvuVs",
@@ -9,7 +10,9 @@ const app = initializeApp(
     storageBucket: "myhostbank.appspot.com",
     messagingSenderId: "102781516227"
   }
-)
+);
 
 export const db = app.database();
-export const questionsRef = db.ref('questions');
+export const questionsRef = db.ref('questions'); //reference in firebase database
+
+

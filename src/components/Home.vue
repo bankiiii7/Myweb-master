@@ -7,18 +7,18 @@
         <th></th>
         <th></th>
       </tr>
-      <tr v-for="question in questions">
+      <tr v-for="question in questionsArray">
         <template v-if="question.account === email">
           <td></td>
           <td align="right">
-            <span class="btn btn-primary btn-lg">
+            <span class="btn btn-primary">
               {{question.question}}
             </span></td>
         </template>
         <template v-else>
           <td align="left">
-          {{(question.account).split("@")[0]}}<br>
-            <span class="btn btn-outline-primary btn-lg">
+            {{(question.account).split("@")[0]}}<br>
+            <span class="btn btn-outline-primary">
               {{question.question}}
             </span>
           </td>
@@ -32,6 +32,12 @@
     <label><textarea v-model="question" id="chatTextArea"></textarea></label>
     <br>
     <button @click="addQuestion" type="button" class="btn btn-success">Chat!</button>
+    <br>
+    <br>
+    <span>
+      <h1>An object</h1>
+      <p>{{questionsObject}}</p>
+    </span>
   </div>
 </template>
 
@@ -61,10 +67,12 @@
       addQuestion: function () {
         var now = new Date();
         questionsRef.push({
-          question: this.question, account: this.email, realTime:moment().toISOString(),timeForSort:now.getFullYear() +
+          question: this.question,
+          account: this.email,
+          realTime: moment().toISOString(),
+          timeForSort: now.getFullYear() +
           now.getMonth() + now.getDate() + now.getTime()
         });
-        document.getElementById("chatTextArea").value = "Fik"
       },
       logout: function () {
         var router = this.$router;
@@ -74,18 +82,23 @@
       }
     },
     firebase: {
-      questions: questionsRef.orderByChild("timeForSort").limitToLast(10)
-    },
-    computed: {
-      reverseItems: function () {
-        return this.questions.slice().reverse();
-      },
-      checkLongMessage:function (msg) {
-        if(msg.length > 15) {
-
-        }
+      questionsArray: questionsRef.orderByChild("timeForSort").limitToLast(10),
+      questionsObject: {
+        source: questionsRef,
+        asObject:true
       }
-    }
+
+    },
+    // computed: {
+    //   reverseItems: function () {
+    //     return this.questions.slice().reverse();
+    //   },
+    //   checkLongMessage:function (msg) {
+    //     if(msg.length > 15) {
+    //
+    //     }
+    //   }
+    // }
 
   }
 </script>
